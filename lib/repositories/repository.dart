@@ -2,7 +2,7 @@ import 'package:criptowallet/models/wallet_model.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import 'dart:convert';
 
-abstract class Repository {
+class Repository {
   Future<List<Wallet>> getWallet() async {
     final jsonData =
         await rootBundle.rootBundle.loadString('json/criptomoedas.json');
