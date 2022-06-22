@@ -84,50 +84,56 @@ class _HomePageState extends State<HomePage> {
             Expanded(
                 child: ListView.separated(
                     itemBuilder: (BuildContext context, index) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height * 0.12,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(coins[index]['image_url']),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    coins[index]['currency_name'],
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  Text(
-                                    "R\$ ${coins[index]['cotation']}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
+                      return InkWell(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(coins[index]['details']['about'])));
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.12,
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(coins[index]['image_url']),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              child: Text(
-                                coins[index]['symbol'],
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 24,
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      coins[index]['currency_name'],
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      "R\$ ${coins[index]['cotation']}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 30),
+                                child: Text(
+                                  coins[index]['symbol'],
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
