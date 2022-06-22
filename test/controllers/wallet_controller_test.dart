@@ -7,7 +7,6 @@ void main() {
   test('deve retornar a wallet', () {
     Future<List<Wallet>> fetchWallet() async {
       final test = await repository.getWallet();
-      print(test[0].message);
       return test;
     }
   });
