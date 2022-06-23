@@ -1,12 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
-import 'package:criptowallet/components/coins_list.dart';
-import 'package:criptowallet/components/header.dart';
-import 'package:criptowallet/controllers/wallet_controller.dart';
-import 'package:criptowallet/repositories/repository.dart';
+import 'package:criptowallet/screens/coin_page.dart';
+import 'package:criptowallet/screens/wallet_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,60 +10,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List coins = [];
-  //List wallet = [];
+  int paginaAtual = 0;
+  late PageController pc;
 
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('json/criptomoedas.json');
-    final data = await json.decode(response);
+  @override
+  void initState() {
+    // TODO: implement initState
+    pc = PageController(initialPage: paginaAtual);
+  }
 
+  setPaginaAtual(pagina) {
     setState(() {
-      coins = data['data'];
+      paginaAtual = pagina;
     });
   }
 
   @override
-  void initState() {
-    super.initState();
-    readJson();
-  }
-
-  // var wallet = walletController.fetchWallet();
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.yellow[600],
-        centerTitle: true,
-        title: Text(
-          'HOME',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Column(
+      body: PageView(
+        controller: pc,
         children: [
-          Header(title: 'Wallet ID:', walletId: 'c0inS-13435-2342-zksh-34556'),
-          Expanded(
-            child: ListView.separated(
-                itemBuilder: (BuildContext context, index) {
-                  return CoinList(
-                      detail: coins[index]['details']['about'],
-                      img: coins[index]['image_url'],
-                      name: coins[index]['currency_name'],
-                      cotation: coins[index]['cotation'],
-                      simbols: coins[index]['symbol']);
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    thickness: 0.5,
-                    height: 0.5,
-                  );
-                },
-                itemCount: coins.length),
-          ),
+          CoinPage(),
+          WalletPage(),
         ],
+        onPageChanged: setPaginaAtual,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: paginaAtual,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Moedas'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_balance_wallet), label: 'Carteira'),
+        ],
+        onTap: (pagina) {
+          pc.animateToPage(pagina,
+              duration: Duration(milliseconds: 400), curve: Curves.decelerate);
+        },
       ),
     );
   }

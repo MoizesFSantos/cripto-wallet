@@ -5,8 +5,4 @@ class WalletController {
   final Repository _repository;
 
   WalletController(this._repository);
-
-  Future<List<Wallet>> fetchWallet() async {
-    return _repository.getWallet();
-  }
 }

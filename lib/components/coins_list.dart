@@ -19,53 +19,30 @@ class CoinList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(detail)));
-      },
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.12,
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(img),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    "R\$ ${cotation}",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Text(
-                simbols,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        onTap: () {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(detail)));
+        },
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(img),
+          ),
+          title: Text(
+            name,
+            style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
+          ),
+          subtitle: Text(
+            "R\$ $cotation",
+            style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
+          ),
+          trailing: Text(
+            simbols,
+            style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                fontFamily: 'Montserrat'),
+          ),
+        ));
   }
 }
