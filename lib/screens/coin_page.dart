@@ -33,7 +33,8 @@ class CoinPage extends StatelessWidget {
                   : ListView.separated(
                       itemBuilder: (BuildContext context, index) {
                         return CoinList(
-                          detail: value.map['data'][index]['details']['about'],
+                          about: value.map['data'][index]['details']['about'],
+                          fee: value.map['data'][index]['details']['fee'],
                           img: value.map['data'][index]['image_url'],
                           name: value.map['data'][index]['currency_name'],
                           cotation: value.map['data'][index]['cotation'],

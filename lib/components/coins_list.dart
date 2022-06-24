@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CoinList extends StatelessWidget {
-  final String detail;
+  final String about;
+  final double fee;
   final String img;
   final String name;
   final String cotation;
@@ -9,7 +10,8 @@ class CoinList extends StatelessWidget {
 
   const CoinList({
     Key? key,
-    required this.detail,
+    required this.about,
+    required this.fee,
     required this.img,
     required this.name,
     required this.cotation,
@@ -18,31 +20,42 @@ class CoinList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(detail)));
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(img),
-          ),
+    return ExpansionTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(img),
+      ),
+      title: Text(
+        name,
+        style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
+      ),
+      subtitle: Text(
+        "R\$ $cotation",
+        style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
+      ),
+      trailing: Text(
+        simbols,
+        style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            fontFamily: 'Montserrat'),
+      ),
+      children: [
+        ListTile(
           title: Text(
-            name,
+            'About:',
             style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
           ),
-          subtitle: Text(
-            "R\$ $cotation",
-            style: TextStyle(fontSize: 16, fontFamily: 'Montserrat'),
+          subtitle: Text(about),
+        ),
+        ListTile(
+          title: Text(
+            'FEE:',
+            style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
           ),
-          trailing: Text(
-            simbols,
-            style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                fontFamily: 'Montserrat'),
-          ),
-        ));
+          subtitle: Text('R\$ ${fee}'),
+        ),
+      ],
+    );
   }
 }
