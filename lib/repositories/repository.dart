@@ -1,23 +1,34 @@
-import 'package:criptowallet/models/wallet_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-import '../models/cripto_model.dart';
+class Repository with ChangeNotifier {
+  Map<String, dynamic> _map = {};
+  bool _error = false;
+  String _errorMessage = '';
 
-class Repository {
-  Future<Wallet> readWallet() async {
+  Map<String, dynamic> get map => _map;
+  bool get error => _error;
+  String get errorMessage => _errorMessage;
+
+  Future<void> get fetchData async {
     final jsonData = await rootBundle.loadString('json/criptomoedas.json');
-    final wallet = json.decode(jsonData);
-    return wallet;
+
+    try {
+      _map = json.decode(jsonData);
+      _error = false;
+    } catch (e) {
+      _error = true;
+      _errorMessage = e.toString();
+      _map = {};
+    }
+    notifyListeners();
   }
 
-  static Future<Data> getCoins(BuildContext context) async {
-    final assetBundle = DefaultAssetBundle.of(context);
-    final jsonData = await assetBundle.loadString('json/criptomoedas.json');
-    final data = json.decode(jsonData);
-    final coin = data['data'];
-    return coin;
-    //return coin.map<Data>((e) => Data.fromJson(e)).toList();
+  void initialValues() {
+    _map = {};
+    _error = false;
+    _errorMessage = '';
+    notifyListeners();
   }
 }
